@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Excel Upload Test</title>
+</head>
+
+<body>
+
+    <h2>Upload Excel File</h2>
+
+    <input type="file" id="file">
+
+    <button onclick="uploadFile()">
+        Upload
+    </button>
+
+    <script>
+        async function uploadFile() {
+
+            const file = document.getElementById("file").files[0];
+
+            if (!file) {
+                alert("Select Excel File");
+                return;
+            }
+
+            const formData = new FormData();
+
+            formData.append("file", file);
+
+            const response = await fetch("http://localhost:3000/api/excel/update", {
+                method: "POST",
+                body: formData
+            });
+
+            const data = await response.json();
+
+            console.log(data);
+
+            alert(JSON.stringify(data, null, 2));
+
+        }
+    </script>
+
+</body>
+
+</html>
