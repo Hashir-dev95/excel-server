@@ -4,16 +4,71 @@ const path = require("path");
 
 /*
 ===========================================================
-DSF MAP
+NAME ALIAS MAP
+  key   → normalized alias  (lowercase, no dots, no spaces)
+  value → official Excel column name (exact match in header row)
 ===========================================================
 */
 
-const DSF_MAP = {
-    "M.Yaseen": "Yaseen",
-    "M.Ali": "Muhammad Ali",
-    "A.Wahid": "Aman Wahid",
-    "A.Hussain": "Akhter Hussain",
+const NAME_ALIAS_MAP = {
+
+    // ── M Yaseen ──────────────────────────────────────────
+    "yaseen": "M Yaseen",
+    "yasin": "M Yaseen",
+    "myaseen": "M Yaseen",
+    "myassen": "M Yaseen",
+
+    // ── Muhammad Ali ─────────────────────────────────────
+    "ali": "Muhammad Ali",
+    "muhammadali": "Muhammad Ali",
+    "mali": "Muhammad Ali",
+
+    // ── Akhtar Hussain ───────────────────────────────────
+    "hussain": "Akhtar Hussain",
+    "husain": "Akhtar Hussain",
+    "akhtar": "Akhtar Hussain",
+    "akhtarhussain": "Akhtar Hussain",
+    "akhtarhusain": "Akhtar Hussain",
+
+    // ── Aman Waheed ──────────────────────────────────────
+    "waheed": "Aman Waheed",
+    "wahid": "Aman Waheed",
+    "aman": "Aman Waheed",
+    "amanwaheed": "Aman Waheed",
+    "amanwahid": "Aman Waheed",
+
 };
+
+/*
+===========================================================
+Resolve Official Name
+  Converts any alias → official Excel name.
+  Returns null when no alias matches (→ Unknown Salesman).
+===========================================================
+*/
+
+function resolveOfficialName(rawName) {
+
+    if (!rawName) return null;
+
+    // Normalize: lowercase, strip dots and extra spaces
+    const key = String(rawName)
+        .toLowerCase()
+        .replace(/\./g, "")
+        .replace(/\s+/g, "")
+        .trim();
+
+    const official = NAME_ALIAS_MAP[key] || null;
+
+    if (official) {
+        console.log(`[AliasMap] "${rawName}" → "${official}"`);
+    } else {
+        console.warn(`[AliasMap] No match for "${rawName}" → Unknown Salesman`);
+    }
+
+    return official;
+
+}
 
 /*
 ===========================================================
@@ -132,9 +187,8 @@ function findDSFColumn(sheet, dsfName) {
 
     const headerRow = sheet.getRow(6);
 
-    const mappedName = DSF_MAP[dsfName] || dsfName;
-
-    const search = normalizeText(mappedName);
+    // dsfName is already the official name resolved by resolveOfficialName()
+    const search = normalizeText(dsfName);
 
     let columnFound = -1;
 
@@ -392,19 +446,33 @@ async function updateWorkbook(filePath, parsedData) {
     console.log("Date Row :", rowNumber);
     /*
     ---------------------------------------
+    Resolve Alias → Official Name
+    ---------------------------------------
+    */
+
+    const officialName = resolveOfficialName(parsedData.dsf);
+
+    if (!officialName) {
+        throw new Error(
+            `Unknown Salesman: "${parsedData.dsf}" did not match any known alias. Excel was NOT updated.`
+        );
+    }
+
+    /*
+    ---------------------------------------
     Find DSF Column
     ---------------------------------------
     */
 
     const columnNumber = findDSFColumn(
         sheet,
-        parsedData.dsf
+        officialName
     );
 
     if (columnNumber === -1) {
 
         throw new Error(
-            `DSF not found : ${parsedData.dsf}`
+            `DSF column not found in Excel for official name: "${officialName}"`
         );
 
     }

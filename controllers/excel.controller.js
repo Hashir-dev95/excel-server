@@ -39,14 +39,20 @@ exports.updateWorkbook = async (req, res) => {
 
         );
 
-        return res.json({
+       const filename = path.basename(result.output);
 
-            success: true,
+return res.json({
 
-            result
+    success: true,
 
-        });
+    result: {
+        ...result,
+        filename,
+        downloadUrl:
+        `${req.protocol}://${req.get("host")}/api/excel/download/${filename}`
+    }
 
+});
     }
 
     catch (error) {
