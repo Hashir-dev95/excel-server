@@ -12,11 +12,13 @@ NAME ALIAS MAP
 
 const NAME_ALIAS_MAP = {
 
-    // ── M Yaseen ──────────────────────────────────────── ─
-    "yaseen": "M.Yaseen",
-    "yasin": "M.Yaseen",
-    "myaseen": "M.Yaseen",
-    "myassen": "M.Yaseen", 
+    // ── M Yaseen / M Yassen (both spellings accepted) ─────
+    "Yaseen": "M.Yassen",
+    "Yasin": "M.Yassen",
+    "myaseen": "M.Yassen",
+    "myassen": "M.Yassen",
+    "yassen": "M.Yassen",
+    "myasin": "M.Yassen",
 
     // ── Muhammad Ali ─────────────────────────────────────
     "ali": "Muhammad Ali",
@@ -192,9 +194,15 @@ function findDSFColumn(sheet, dsfName) {
 
     let columnFound = -1;
 
+    // Log all header values for debugging
+    console.log("[findDSFColumn] Searching for:", dsfName, "→ normalized:", search);
+
     headerRow.eachCell((cell, columnNumber) => {
 
-        const value = normalizeText(cell.value);
+        const raw = cell.value ? String(cell.value) : "";
+        const value = normalizeText(raw);
+
+        console.log(`  Col ${columnNumber}: raw="${raw}" normalized="${value}"`);
 
         if (value === search) {
 
@@ -203,6 +211,31 @@ function findDSFColumn(sheet, dsfName) {
         }
 
     });
+
+    // Fuzzy fallback: if not found by exact normalized match,
+    // try matching just the core name part (strip leading initials like M)
+    if (columnFound === -1) {
+
+        console.warn("[findDSFColumn] Exact match failed, trying fuzzy match...");
+
+        // e.g. "myassen" → strip leading single char "m" → "yassen"
+        const searchCore = search.replace(/^[a-z]/, "");
+
+        headerRow.eachCell((cell, columnNumber) => {
+
+            const value = normalizeText(cell.value ? String(cell.value) : "");
+            const valueCore = value.replace(/^[a-z]/, "");
+
+            if (valueCore === searchCore && searchCore.length > 3) {
+
+                console.log(`[findDSFColumn] Fuzzy match at col ${columnNumber}: "${value}" ~ "${search}"`);
+                columnFound = columnNumber;
+
+            }
+
+        });
+
+    }
 
     return columnFound;
 
@@ -542,7 +575,7 @@ async function testWorkbook(filePath) {
 
         date: "16-07-2026",
 
-        dsf: "M.Yaseen",
+        dsf: "M.Yassen",
 
         todayValue: 80480
 
