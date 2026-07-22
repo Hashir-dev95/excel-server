@@ -32,14 +32,14 @@ const NAME_ALIAS_MAP = {
     "Akhtarhussain": "Akhtar Hussain",
     "Akhtarhusain": "Akhtar Hussain",
 
-   // ── Aman Wahid ──────────────────────────────────────
-      "aman": "Aman Wahid",
-     "wahid": "Aman Wahid",
-     "waheed": "Aman Wahid",
-     "amanwahid": "Aman Wahid",
-     "amanwaheed": "Aman Wahid",
-     "awahid": "Aman Wahid",
-     "awaheed": "Aman Wahid",
+    // ── Aman Wahid ──────────────────────────────────────
+    "aman": "Aman Wahid",
+    "wahid": "Aman Wahid",
+    "waheed": "Aman Wahid",
+    "amanwahid": "Aman Wahid",
+    "amanwaheed": "Aman Wahid",
+    "awahid": "Aman Wahid",
+    "awaheed": "Aman Wahid",
 };
 
 /*
