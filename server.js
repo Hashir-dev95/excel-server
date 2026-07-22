@@ -7,6 +7,10 @@ const excelRoutes = require("./routes/excel.routes");
 
 const app = express();
 
+// Trust the first proxy in front of the server (e.g. Render's load balancer)
+// to correctly determine req.protocol (HTTP/HTTPS) and req.hostname.
+app.set("trust proxy", 1);
+
 app.use(cors());
 app.use(express.json());
 
