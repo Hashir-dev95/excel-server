@@ -15,22 +15,22 @@ const NAME_ALIAS_MAP = {
     // ── M Yaseen / M Yassen (both spellings accepted) ─────
     "Yaseen": "M.Yaseen",
     "Yasin": "M.Yaseen",
-    "myaseen": "M.Yaseen",
-    "myassen": "M.Yaseen",
+    "Myaseen": "M.Yaseen",
+    "Myassen": "M.Yaseen",
     "yassen": "M.Yaseen",
-    "myasin": "M.Yaseen",
+    "Myasin": "M.Yaseen",
 
     // ── Muhammad Ali ─────────────────────────────────────
-    "ali": "Muhammad Ali",
+    "Ali": "Muhammad Ali",
     "muhammadali": "Muhammad Ali",
     "mali": "Muhammad Ali",
 
     // ── Akhtar Hussain ───────────────────────────────────
-    "hussain": "Akhtar Hussain",
-    "husain": "Akhtar Hussain",
-    "akhtar": "Akhtar Hussain",
-    "akhtarhussain": "Akhtar Hussain",
-    "akhtarhusain": "Akhtar Hussain",
+    "Hussain": "Akhtar Hussain",
+    "Husain": "Akhtar Hussain",
+    "Hkhtar": "Akhtar Hussain",
+    "Akhtarhussain": "Akhtar Hussain",
+    "Akhtarhusain": "Akhtar Hussain",
 
    // ── Aman Wahid ──────────────────────────────────────
       "aman": "Aman Wahid",
