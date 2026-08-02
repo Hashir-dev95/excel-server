@@ -13,12 +13,12 @@ NAME ALIAS MAP
 const NAME_ALIAS_MAP = {
 
     // ── M Yaseen / M Yassen (both spellings accepted) ─────
-    "Yaseen": "M.Yaseen",
-    "Yasin": "M.Yaseen",
-    "Myaseen": "M.Yaseen",
-    "Myassen": "M.Yaseen",
-    "yassen": "M.Yaseen",
-    "Myasin": "M.Yaseen",
+    "Yaseen": "YaSeeN",
+    "Yasin": "YaSeeN",
+    "Myaseen": "YaSeeN",
+    "Myassen": "YaSeeN",
+    "yassen": "YaSeeN",
+    "Myasin": "YaSeeN",
 
     // ── Muhammad Ali ─────────────────────────────────────
     "Ali": "Muhammad Ali",
