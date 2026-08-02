@@ -25,12 +25,12 @@ const NAME_ALIAS_MAP = {
     "muhammadali": "Muhammad Ali",
     "mali": "Muhammad Ali",
 
-    // ── Akhtar Hussain ───────────────────────────────────
-    "Hussain": "Akhtar Hussain",
-    "Husain": "Akhtar Hussain",
-    "Hkhtar": "Akhtar Hussain",
-    "Akhtarhussain": "Akhtar Hussain",
-    "Akhtarhusain": "Akhtar Hussain",
+    // ── Mujeebullah ───────────────────────────────────
+    "Mujeebullah": "Mujeebullah",
+    "mujeebullah": "Mujeebullah",
+    "Mujeeb": "Mujeebullah",
+    "Mujeeb": "Mujeebullah",
+
 
     // ── Aman Wahid ──────────────────────────────────────
     "aman": "Aman Wahid",
