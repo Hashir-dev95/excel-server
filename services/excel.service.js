@@ -12,17 +12,13 @@ NAME ALIAS MAP
 
 const NAME_ALIAS_MAP = {
 
-    // M.Yaseen aliases
-    "M.Yaseen": "M.Yaseen",
-    "M Yaseen": "M.Yaseen",
-    "MYaseen": "M.Yaseen",
-    "Yaseen": "M.Yaseen",
-    "Yasin": "M.Yaseen",
-   "M.Yassen": "M.Yaseen",
-   "M Yassen": "M.Yaseen",
-  "Myaseen": "M.Yaseen",
- "yaseen": "M.Yaseen",
-"yassen": "M.Yaseen",
+   // ── M.Yaseen aliases ─────────────────────────────
+    "myaseen": "M.Yaseen",
+    "myassen": "M.Yaseen",
+    "myasin": "M.Yaseen",
+    "yaseen": "M.Yaseen",
+    "yassen": "M.Yaseen",
+    "yasin": "M.Yaseen",
     // ── Muhammad Ali ─────────────────────────────────────
     "Ali": "Muhammad Ali",
     "muhammadali": "Muhammad Ali",
