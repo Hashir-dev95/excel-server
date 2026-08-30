@@ -30,11 +30,9 @@ const NAME_ALIAS_MAP = {
     "Mujeeb": "Mujeebullah",
     "Mujeeb": "Mujeebullah",
 
-  // ── Akhter ─────────────────────────────────────────────
+ // ── Akhtar / Akhter ─────────────────────────────
 "akhtar": "AKHTAR",
-"akhtarhussain": "AKHTAR",
-"akhtar": "AKHTAR",
-"akhtarhussain": "AKHTAR",
+"akhter": "AKHTAR",
 
 
     // ── Aman Wahid ──────────────────────────────────────
