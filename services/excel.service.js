@@ -47,59 +47,6 @@ const NAME_ALIAS_MAP = {
 
 /*
 ===========================================================
-console.log("***** USING CURRENT excel.service.js *****");
-
-const ExcelJS = require("exceljs");
-const path = require("path");
-
-/*
-===========================================================
-NAME ALIAS MAP
-
-key   → normalized alias
-        lowercase, no dots, no spaces
-
-value → official Excel column name
-        must match the Excel header
-===========================================================
-*/
-
-const NAME_ALIAS_MAP = {
-
-    // ── M.Yaseen / M.Yassen ─────────────────────────────
-    "myaseen": "M.Yaseen",
-    "myassen": "M.Yaseen",
-    "myasin": "M.Yaseen",
-    "yaseen": "M.Yaseen",
-    "yassen": "M.Yaseen",
-    "yasin": "M.Yaseen",
-
-    // ── Muhammad Ali ─────────────────────────────────────
-    "ali": "Muhammad Ali",
-    "muhammadali": "Muhammad Ali",
-    "mali": "Muhammad Ali",
-
-    // ── Mujeebullah ──────────────────────────────────────
-    "mujeebullah": "Mujeebullah",
-    "mujeeb": "Mujeebullah",
-
-    // ── Akhtar / Akhter ──────────────────────────────────
-    "akhtar": "AKHTAR",
-    "akhter": "AKHTAR",
-
-    // ── Aman Wahid ───────────────────────────────────────
-    "aman": "Aman Wahid",
-    "wahid": "Aman Wahid",
-    "waheed": "Aman Wahid",
-    "amanwahid": "Aman Wahid",
-    "amanwaheed": "Aman Wahid",
-    "awahid": "Aman Wahid",
-    "awaheed": "Aman Wahid",
-
-};
-
-/*
-===========================================================
 Resolve Official Name
 
 Converts any alias → official Excel name.
