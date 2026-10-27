@@ -12,6 +12,12 @@ NAME ALIAS MAP
 
 const NAME_ALIAS_MAP = {
 
+    // Akhter Hussain aliases
+    "akhtar": "AKHTAR",
+    "akhter": "AKHTAR",
+    "akhtarhussain": "AKHTAR",
+    "akhterhussain": "AKHTAR",
+
    // ── M.Yaseen aliases ─────────────────────────────
     "myaseen": "M.Yaseen",
     "myassen": "M.Yaseen",
@@ -20,7 +26,7 @@ const NAME_ALIAS_MAP = {
     "yassen": "M.Yaseen",
     "yasin": "M.Yaseen",
     // ── Muhammad Ali ─────────────────────────────────────
-    "Ali": "Muhammad Ali",
+    "ali": "Muhammad Ali",
     "muhammadali": "Muhammad Ali",
     "mali": "Muhammad Ali",
 
@@ -214,7 +220,7 @@ function findDSFColumn(sheet, dsfName) {
 
     // Fuzzy fallback: if not found by exact normalized match,
     // try matching just the core name part (strip leading initials like M)
-    if (columnFound === -1) {
+    if (columnFound === -1 && search !== "akhtar") {
 
         console.warn("[findDSFColumn] Exact match failed, trying fuzzy match...");
 
@@ -268,14 +274,26 @@ function recalculateWorkbook(sheet) {
 
     console.log("===== RECALCULATING WORKBOOK =====");
 
-    // STEP 1 - Update Daily Total (Column F)
+    let totalColumn = -1;
+
+    sheet.getRow(6).eachCell((cell, columnNumber) => {
+        if (normalizeText(cell.value) === "total") {
+            totalColumn = columnNumber;
+        }
+    });
+
+    if (totalColumn < 3) {
+        throw new Error("Total column not found after DSF columns in Excel header row 6.");
+    }
+
+    // STEP 1 - Update Daily Total in the detected Total column
 
     for (let row = 7; row <= 37; row++) {
 
         let total = 0;
 
-        // B to E
-        for (let col = 2; col <= 5; col++) {
+        // All DSF columns before Total
+        for (let col = 2; col < totalColumn; col++) {
 
             const rawValue = sheet.getRow(row).getCell(col).value;
 
@@ -305,91 +323,39 @@ function recalculateWorkbook(sheet) {
 
         }
 
-        sheet.getRow(row).getCell(6).value = total;
+        sheet.getRow(row).getCell(totalColumn).value = total;
 
         console.log(
             `Row ${row} Total = ${total}`
         );
 
     }
-    // STEP 2  ← YE LOOP KE BAHAR HOGA
+    // STEP 2 - Update DSF totals and the grand total in row 3
 
-    let totalB = 0;
+    for (let col = 2; col <= totalColumn; col++) {
+        let total = 0;
 
-    for (let row = 7; row <= 37; row++) {
+        for (let row = 7; row <= 37; row++) {
+            const rawValue = sheet.getRow(row).getCell(col).value;
+            const value = rawValue && typeof rawValue === "object" && rawValue.result != null
+                ? rawValue.result
+                : rawValue;
+            total += Number(value || 0);
+        }
 
-        const value = Number(
-            sheet.getRow(row).getCell(2).value || 0
-        );
-
-        totalB += value;
+        const totalCell = sheet.getRow(3).getCell(col);
+        totalCell.value = total;
+        console.log(`${totalCell.address} Updated:`, total);
     }
 
-    sheet.getCell("B3").value = totalB;
-
-    console.log("B3 Updated:", totalB);
-
-    // STEP 3 - Update C3
-
-    let totalC = 0;
-
-    for (let row = 7; row <= 37; row++) {
-
-        const value = Number(
-            sheet.getRow(row).getCell(3).value || 0
-        );
-
-        totalC += value;
-    }
-
-    sheet.getCell("C3").value = totalC;
-
-    console.log("C3 Updated:", totalC);
-
-    // D3
-    let totalD = 0;
-
-    for (let row = 7; row <= 37; row++) {
-        totalD += Number(sheet.getRow(row).getCell(4).value || 0);
-    }
-
-    sheet.getCell("D3").value = totalD;
-
-    console.log("D3 Updated:", totalD);
-
-    // E3
-    let totalE = 0;
-
-    for (let row = 7; row <= 37; row++) {
-        totalE += Number(sheet.getRow(row).getCell(5).value || 0);
-    }
-
-    sheet.getCell("E3").value = totalE;
-
-    console.log("E3 Updated:", totalE);
-
-    // STEP 2.5 - Update F3 (Grand Total)
-
-    let totalF = 0;
-
-    for (let row = 7; row <= 37; row++) {
-
-        totalF += Number(
-            sheet.getRow(row).getCell(6).value || 0
-        );
-
-    }
-
-    sheet.getCell("F3").value = totalF;
-
-    console.log("F3 Updated:", totalF);
-
-    console.log("F2 Target =", sheet.getCell("F2").value);
-    console.log("F3 Achieved =", sheet.getCell("F3").value);
+    const targetCell = sheet.getRow(2).getCell(totalColumn);
+    const achievedCell = sheet.getRow(3).getCell(totalColumn);
+    console.log(`${targetCell.address} Target =`, targetCell.value);
+    console.log(`${achievedCell.address} Achieved =`, achievedCell.value);
 
     // STEP 3 - Update Percentage Row (Row 4)
 
-    for (let col = 2; col <= 6; col++) {
+    for (let col = 2; col <= totalColumn; col++) {
 
         const targetCell = sheet.getRow(2).getCell(col).value;
 
